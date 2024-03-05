@@ -18,6 +18,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\ProductRatingController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,10 @@ Route::post('/apply-discount',[CartController::class,'applyDiscount'])->name('fo
 Route::post('/remove-discount',[CartController::class,'removeCoupon'])->name('fornt.removeCoupon');
 Route::post('/add-to-wishlist',[FrontController::class,'addToWishList'])->name('fornt.addToWishList');
 Route::get('/page/{slug}',[FrontController::class,'page'])->name('fornt.page');
+
+//rating routes
+Route::post('save-rating/{productId}', [ProductRatingController::class,'saveRating'])->name('fornt.saveRating');
+
 
 //forgotpassword routes
 Route::get('/forgot-password',[AuthController::class,'forgotPassword'])->name('fornt.forgotPassword');
@@ -134,6 +139,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('/products/{product}', [ProductController::class, 'update'])->name('product.update');
         Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
         Route::get('/get-products',[ProductController::class,'getProducts'])->name('product.getProducts');
+        Route::get('/ratings', [ProductController::class, 'productRating'])->name('product.productRating');
+        Route::get('/change-rating-status', [ProductController::class, 'changeRatingStatus'])->name('product.changeRatingStatus');
+
 
         Route::post('/product-images/update', [ProductImageController::class, 'update'])->name('product-images.update');
         Route::delete('/product-images', [ProductImageController::class, 'destroy'])->name('product-images.destroy');

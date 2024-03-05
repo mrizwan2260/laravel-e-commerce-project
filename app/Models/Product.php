@@ -9,7 +9,13 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function Product_Image(){
+    public function Product_Image()
+    {
         return $this->hasMany(Product_Image::class);
+    }
+
+    public function product_rating()
+    {
+        return $this->hasMany(ProductRating::class)->where('status', 1);
     }
 }

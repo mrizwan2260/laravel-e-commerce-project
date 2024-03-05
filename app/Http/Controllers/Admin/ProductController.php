@@ -7,6 +7,7 @@ use App\Models\brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Product_Image;
+use App\Models\ProductRating;
 use App\Models\SubCategory;
 use App\Models\TempImage;
 use Illuminate\Http\Request;
@@ -270,6 +271,30 @@ class ProductController extends Controller
         return response()->json([
             'tags' => $tempProduct,
             'status' => true,
+        ]);
+    }
+
+
+    //rating function
+    public function productRating()
+    {
+        $product_ratings = ProductRating::latest()->get();
+        return view('admin.product.ratings', compact('product_ratings'));
+    }
+
+
+    //change rating status function
+    public function changeRatingStatus(Request $request)
+    {
+        $product_rating         = productRating::find($request->id);
+        $product_rating->status = $request->status;
+        $product_rating->save();
+
+        session()->flash('success', 'Record updated successfully.');
+
+        return response()->json([
+            'status'            => true,
+            'message'           => 'Record updated successfully.'
         ]);
     }
 }
